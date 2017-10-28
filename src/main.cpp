@@ -9,14 +9,6 @@
 #include <map>
 #include "Parser.hpp"
 
-// #define H1_REGEX "^#\\s.+"
-// #define H2_REGEX "^#{2}\\s.+"
-// #define H3_REGEX "^#{3}\\s.+"
-// #define H4_REGEX "^#{4}\\s.+"
-// #define H5_REGEX "^#{5}\\s.+"
-// #define ULOL_REGEX "^(\\*|-)\\s.+"
-// #define P_REGEX "^[^(\\-#*)].*"
-
 int main() {
     auto parser = new Parser();
     parser->loadFile("./assets/test.md");
@@ -31,7 +23,6 @@ int main() {
 
     json jp = parser->bodyModel;
     std::cout << jp << std::endl;
-    //std::cout << parser->lines.size() << std::endl;
 }
 
 // int main()

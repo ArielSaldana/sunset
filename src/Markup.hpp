@@ -10,6 +10,12 @@
 
 using nlohmann::json;
 
+#define ITALIC  1
+#define BOLD    2
+#define LINK    3
+#define UNDERLINE 5
+#define STRIKE_THROUGH 4
+
 namespace mdm {
     struct Markup {
         int start;

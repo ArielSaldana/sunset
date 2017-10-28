@@ -3,13 +3,6 @@
 
 #include "Markup.hpp"
 
-#define BOLD    1
-#define ITALIC  2
-#define LINK    3
-#define UNDERLINE 5
-#define STRIKE_THROUGH 4
-
-
 using mdm::Markup;
 
 void mdm::to_json(json& j, const Markup& m) {

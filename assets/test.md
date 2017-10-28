@@ -1,10 +1,21 @@
-# Testing 2
+# _Testing_ 2
 no
 ## testing 3
 #### no
 hello
 
-**this is a sentence in bold with a word thats _italic_**
+*ABC*
+
+**ABC**
+
+
+
+
+**this is a sentence in bold with a word thats**
+
+**this **is****
+
+__this is a sentence in bold with a word thats *italic*__
 
 Hello, I am testing
 `jesus.`

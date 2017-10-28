@@ -67,20 +67,64 @@ void Parser::process(std::vector<std::string> const &lines, int index, int lengt
         }
         process(lines, index + 1 + offset, length, &par);
     }
-
-
 }
 
-std::string Parser::processLine(mdp::Paragraph &paragraph) {
-    switch(paragraph.type) {
-        case 1:
-        case 2:
-        case 3:
-        case 4:
-        case 5:
-        case 7:
-        paragraph.text = paragraph.text.substr(paragraph.type+1, paragraph.text.length()-1);
+void Parser::processLine(mdp::Paragraph &paragraph)
+{
+    int removeIndex = 0;
+    switch (paragraph.type)
+    {
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+    case 7:
+    case 9:
+        if (paragraph.type == 7) {
+            removeIndex = 6;
+        } else if (paragraph.type == 9) {
+            removeIndex = 1;
+        } else {
+            removeIndex = paragraph.type;
+        }
+        paragraph.text = paragraph.text.substr(removeIndex + 1, paragraph.text.length() - 1);
+    case 6:
+        //create a stack based algorithm for this, or regex, and keep track of start/ends
+        std::stack<mdm::Markup> stack;
+        char c;
+        mdm::Markup markup;
 
+        for (int i = 0; i < paragraph.text.length(); i++)
+        {
+            c = paragraph.text[i];
+
+            if (c == '*' || c == '_') { 
+                int count = 1;
+                while (i + count < paragraph.text.length()) {
+                    if (paragraph.text.at(i+count) == c) {
+                        count++;
+                    } else {
+                        break;
+                    }
+                }
+
+                paragraph.text.erase(i, count);
+                markup = {i, 0, count};
+                i--;
+                
+                // stack logic
+                if (!(stack.empty()) && (stack.top().type == markup.type)) {
+                    markup = stack.top();
+                    markup.end = i;
+                    paragraph.markups.push_back(markup);
+                    stack.pop();
+                } else {
+                    stack.push(markup);
+                }
+            }
+        }
+
+        break;
     }
-    return "";
 }

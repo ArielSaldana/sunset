@@ -10,8 +10,11 @@
 #include <regex>
 #include <string>
 #include <vector>
+#include <stack>
+#include <deque>
 #include "Paragraph.hpp"
 #include "BodyModel.hpp"
+#include "Markup.hpp"
 #include "Rule.hpp"
 
 #define H1_REGEX "^#\\s.+"
@@ -22,7 +25,7 @@
 #define H6_REGEX "^#{6}\\s.+"
 #define ULOL_REGEX "^(\\*|-)\\s.+"
 //#define P_REGEX "^[^(\\-#*)].*"
-#define P_REGEX "^(\\w+|\\*{2}).+"
+#define P_REGEX "^(\\w+|\\*{1,2}).+"
 #define CODEBLOCK_REGEX "`{3}.*"
 
 class Parser {
@@ -49,7 +52,7 @@ public:
     void loadFile(const std::string file);
     void preprocessFile();
     void process(std::vector<std::string> const &lines, int index, int length, mdp::Paragraph *p);
-    std::string processLine(mdp::Paragraph &paragraph);
+    void processLine(mdp::Paragraph &paragraph);
 };
 
 #endif // parser_hpp
