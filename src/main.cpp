@@ -11,7 +11,7 @@
 
 int main() {
     auto parser = new Parser();
-    parser->loadFile("./assets/test.md");
+    parser->loadFile("./assets/test2.md");
     
     parser->preprocessFile();
     parser->process(

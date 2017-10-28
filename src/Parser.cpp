@@ -90,6 +90,7 @@ void Parser::processLine(mdp::Paragraph &paragraph)
         }
         paragraph.text = paragraph.text.substr(removeIndex + 1, paragraph.text.length() - 1);
     case 6:
+    case 10:
         //create a stack based algorithm for this, or regex, and keep track of start/ends
         std::stack<mdm::Markup> stack;
         char c;

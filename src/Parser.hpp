@@ -23,7 +23,8 @@
 #define H4_REGEX "^#{4}\\s.+"
 #define H5_REGEX "^#{5}\\s.+"
 #define H6_REGEX "^#{6}\\s.+"
-#define ULOL_REGEX "^(\\*|-)\\s.+"
+#define UL_REGEX "^(\\*|-)\\s.+"
+#define OL_REGEX "^\\d\\.\\s.+"
 //#define P_REGEX "^[^(\\-#*)].*"
 #define P_REGEX "^(\\w+|\\*{1,2}).+"
 #define CODEBLOCK_REGEX "`{3}.*"
@@ -43,7 +44,8 @@ public:
         {4, std::regex(H4_REGEX)},
         {5, std::regex(H5_REGEX)},
         {7, std::regex(H6_REGEX)},
-        {9, std::regex(ULOL_REGEX)},
+        {9, std::regex(UL_REGEX)},
+        {10, std::regex(OL_REGEX)},
         {8, std::regex(CODEBLOCK_REGEX), true, true},
         {6, std::regex(P_REGEX), true},
         // {6, std::regex(".*"), true},
