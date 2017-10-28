@@ -19,6 +19,7 @@
 #define H3_REGEX "^#{3}\\s.+"
 #define H4_REGEX "^#{4}\\s.+"
 #define H5_REGEX "^#{5}\\s.+"
+#define H6_REGEX "^#{6}\\s.+"
 #define ULOL_REGEX "^(\\*|-)\\s.+"
 //#define P_REGEX "^[^(\\-#*)].*"
 #define P_REGEX "^(\\w+|\\*{2}).+"
@@ -38,6 +39,7 @@ public:
         {3, std::regex(H3_REGEX)},
         {4, std::regex(H4_REGEX)},
         {5, std::regex(H5_REGEX)},
+        {7, std::regex(H6_REGEX)},
         {9, std::regex(ULOL_REGEX)},
         {8, std::regex(CODEBLOCK_REGEX), true, true},
         {6, std::regex(P_REGEX), true},
@@ -47,6 +49,7 @@ public:
     void loadFile(const std::string file);
     void preprocessFile();
     void process(std::vector<std::string> const &lines, int index, int length, mdp::Paragraph *p);
+    std::string processLine(mdp::Paragraph &paragraph);
 };
 
 #endif // parser_hpp

@@ -58,11 +58,29 @@ void Parser::process(std::vector<std::string> const &lines, int index, int lengt
                         offset++;
                     }
                 }
+
+                // par.text = processLine(par.text, par.type);
+                processLine(par);
                 bodyModel.add(par);
                 break;
             }
         }
-        //std::cout << offset << std::endl;
         process(lines, index + 1 + offset, length, &par);
     }
+
+
+}
+
+std::string Parser::processLine(mdp::Paragraph &paragraph) {
+    switch(paragraph.type) {
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        case 7:
+        paragraph.text = paragraph.text.substr(paragraph.type+1, paragraph.text.length()-1);
+
+    }
+    return "";
 }
