@@ -8,9 +8,9 @@
 
 #include "Paragraph.hpp"
 
-using mdp::Paragraph;
+using Sunset::Paragraph;
 
-void mdp::to_json(json& j, const Paragraph& p) {
+void Sunset::to_json(json& j, const Paragraph& p) {
     j = json{
         {"id", p.id}, 
         {"text", p.text}, 
@@ -19,10 +19,10 @@ void mdp::to_json(json& j, const Paragraph& p) {
     };
 }
 
-void mdp::from_json(const json& j, Paragraph& p) {
+void Sunset::from_json(const json& j, Paragraph& p) {
     p.id = j.at("id").get<std::string>();
     p.text = j.at("text").get<std::string>();
     p.type = j.at("type").get<int>();
-    p.markups = j.at("markups").get<std::vector<mdm::Markup>>();
+    p.markups = j.at("markups").get<std::vector<Sunset::Markup>>();
 }
 

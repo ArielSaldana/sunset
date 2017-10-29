@@ -3,10 +3,12 @@
 
 #include "Parser.hpp"
 
-mdc::Content Parser::loadFile(std::string file)
+using namespace Sunset;
+
+Sunset::Content Parser::loadFile(std::string file)
 {
-    mdc::Content fileContent;
-    mdbm::BodyModel bodyModel;
+    Sunset::Content fileContent;
+    Sunset::BodyModel bodyModel;
     
     std::vector<std::string> lines;
     std::vector<std::string> YAMLLines;
@@ -66,6 +68,34 @@ json Parser::getFileJson(std::string file)
     return j;
 }
 
+json Parser::getFileJson(const std::string file, bool directory){
+    if (!directory)
+        return getFileJson(file);
+
+    std::vector<Sunset::Content> contents;
+    json j;
+
+    DIR *dpdf;
+    struct dirent *epdf;
+
+    dpdf = opendir(file.c_str());
+    if (dpdf != NULL){
+        while ((epdf = readdir(dpdf))) {
+            if (std::regex_match(epdf->d_name, std::regex(".+\\.md$"))) {
+                content.push_back(
+                    loadFile(file + epdf->d_name)
+                );
+            }
+        }
+    }
+    closedir(dpdf);
+
+    j["payload"]["content"] = content;
+    return j;
+}
+
+
+
 bool Parser::preprocessFile(std::ifstream& myReadFile, std::vector<std::string>& lines, std::vector<std::string>& YAMLLines)
 {
     std::string line;
@@ -95,12 +125,12 @@ bool Parser::preprocessFile(std::ifstream& myReadFile, std::vector<std::string>&
     return hasYAML;
 }
 
-void Parser::processMarkdown(mdbm::BodyModel& bodyModel, std::vector<std::string> const &lines, int index, int length, mdp::Paragraph *p)
+void Parser::processMarkdown(Sunset::BodyModel& bodyModel, std::vector<std::string> const &lines, int index, int length, Sunset::Paragraph *p)
 {
     if (index != length)
     {
         std::string line = lines.at(index);
-        mdp::Paragraph par;
+        Sunset::Paragraph par;
         int offset = 0;
 
         // iterate through rules until match is found.
@@ -146,7 +176,7 @@ void Parser::processMarkdown(mdbm::BodyModel& bodyModel, std::vector<std::string
     }
 }
 
-void Parser::processLine(mdp::Paragraph &paragraph)
+void Parser::processLine(Sunset::Paragraph &paragraph)
 {
     int removeIndex = 0;
     switch (paragraph.type)
@@ -169,9 +199,9 @@ void Parser::processLine(mdp::Paragraph &paragraph)
     case 6:
     case 10:
         //create a stack based algorithm for this, or regex, and keep track of start/ends
-        std::stack<mdm::Markup> stack;
+        std::stack<Sunset::Markup> stack;
         char c;
-        mdm::Markup markup;
+        Sunset::Markup markup;
 
         for (int i = 0; i < paragraph.text.length(); i++)
         {

@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 3.0)
 project (MarkdownParser)
 
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z")
 
 #include the subdirectory containing our libs
 include_directories(src)
@@ -20,12 +20,25 @@ file(GLOB SOURCES src/*.cpp)
 file(GLOB HEADERS src/*.hpp)
 file(GLOB YAMLSOURCES yaml/src/*.cpp)
 file(GLOB YAMLHEADERS yaml/src/*.h)
+
 add_executable (sunset 
-src/json.h
-${SOURCES}
-${HEADERS}
-${YAMLSOURCES}
-${YAMLHEADERS}
+    src/json.h
+    ${SOURCES}
+    ${HEADERS}
+    ${YAMLSOURCES}
+    ${YAMLHEADERS}
+)
+
+#add_library(MyLib SHARED 
+#    ${SOURCES}
+#    ${HEADERS}
+#    ${YAMLSOURCES}
+#    ${YAMLHEADERS}
+#)
+
+add_library(MyLibStatic STATIC 
+    ${SOURCES}
+    ${YAMLSOURCES}
 )
 
 # Indicate which libraries to include during the link process.

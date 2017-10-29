@@ -12,6 +12,7 @@
 #include <vector>
 #include <stack>
 #include <deque>
+#include <dirent.h>
 #include "Paragraph.hpp"
 #include "BodyModel.hpp"
 #include "Content.hpp"
@@ -32,51 +33,54 @@
 #define P_REGEX "^(\\w+|\\*{1,2}).+"
 #define CODEBLOCK_REGEX "`{3}.*"
 
-class Parser {
-public:
-    std::vector<Rule> rules;
-    std::map<int, std::regex> regexMap;
-    
-    std::vector<mdc::Content> content;
-    enum StringValue { 
-        title,
-        description,
-        link,
-        img,
-        category,
-        layout
-    };
-    std::map<std::string, StringValue> values;
-    
-    Parser() : rules{
-        {1, std::regex(H1_REGEX)},
-        {2, std::regex(H2_REGEX)},
-        {3, std::regex(H3_REGEX)},
-        {4, std::regex(H4_REGEX)},
-        {5, std::regex(H5_REGEX)},
-        {7, std::regex(H6_REGEX)},
-        {9, std::regex(UL_REGEX)},
-        {10, std::regex(OL_REGEX)},
-        {11, std::regex(IMG_REGEX)},
-        {8, std::regex(CODEBLOCK_REGEX), true, true},
-        {6, std::regex(P_REGEX), true},
-        // {6, std::regex(".*"), true},
-    }, values{
-        {"title", title},
-        {"description", description},
-        {"link", link},
-        {"img", img},
-        {"category", category},
-        {"layout", layout},
-    } {}
+namespace Sunset{
+    class Parser {
+    public:
+        std::vector<Rule> rules;
+        std::map<int, std::regex> regexMap;
+        
+        std::vector<Sunset::Content> content;
+        enum StringValue { 
+            title,
+            description,
+            link,
+            img,
+            category,
+            layout
+        };
+        std::map<std::string, StringValue> values;
+        
+        Parser() : rules{
+            {1, std::regex(H1_REGEX)},
+            {2, std::regex(H2_REGEX)},
+            {3, std::regex(H3_REGEX)},
+            {4, std::regex(H4_REGEX)},
+            {5, std::regex(H5_REGEX)},
+            {7, std::regex(H6_REGEX)},
+            {9, std::regex(UL_REGEX)},
+            {10, std::regex(OL_REGEX)},
+            {11, std::regex(IMG_REGEX)},
+            {8, std::regex(CODEBLOCK_REGEX), true, true},
+            {6, std::regex(P_REGEX), true},
+            // {6, std::regex(".*"), true},
+        }, values{
+            {"title", title},
+            {"description", description},
+            {"link", link},
+            {"img", img},
+            {"category", category},
+            {"layout", layout},
+        } {}
 
-    mdc::Content loadFile(const std::string file);
-    json getFileJson(const std::string file);
-    void loadDirectory(const std::string path);
-    bool preprocessFile(std::ifstream& myReadFile, std::vector<std::string>& lines, std::vector<std::string>& YAMLLines);
-    void processYAML();
-    void processMarkdown(mdbm::BodyModel& bodyModel, std::vector<std::string> const &lines, int index, int length, mdp::Paragraph *p);
-    void processLine(mdp::Paragraph &paragraph);
-};
+        Sunset::Content loadFile(const std::string file);
+        json getFileJson(const std::string file);
+        json getFileJson(const std::string file, bool directory);
+        void loadDirectory(const std::string path);
+        bool preprocessFile(std::ifstream& myReadFile, std::vector<std::string>& lines, std::vector<std::string>& YAMLLines);
+        void processYAML();
+        void processMarkdown(Sunset::BodyModel& bodyModel, std::vector<std::string> const &lines, int index, int length, Sunset::Paragraph *p);
+        void processLine(Sunset::Paragraph &paragraph);
+    };
+}
 
 #endif // parser_hpp

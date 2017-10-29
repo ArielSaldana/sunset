@@ -13,7 +13,7 @@
 
 using nlohmann::json;
 
-namespace mdc {
+namespace Sunset {
     class Content {
     public:
         std::string title;
@@ -23,7 +23,7 @@ namespace mdc {
         std::string layout;
         std::string category;
         std::vector<std::string> tags;
-        mdbm::BodyModel bodyModel;
+        Sunset::BodyModel bodyModel;
     };
     void to_json(json& j, const Content& c);
     void from_json(const json& j, Content& p);

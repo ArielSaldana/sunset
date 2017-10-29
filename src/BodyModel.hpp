@@ -17,12 +17,12 @@
 using nlohmann::json;
 
 
-namespace mdbm { // markdown body-model
+namespace Sunset { // markdown body-model
     class BodyModel {
     public:
         std::string s;
-        std::vector<mdp::Paragraph> paragraphs;
-        void add(mdp::Paragraph p);
+        std::vector<Sunset::Paragraph> paragraphs;
+        void add(Sunset::Paragraph p);
     };
     void to_json(json& j, const BodyModel& p);
     void from_json(const json& j, BodyModel& p);

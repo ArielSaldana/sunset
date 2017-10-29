@@ -8,14 +8,14 @@
 
 #include "BodyModel.hpp"
 
-void mdbm::BodyModel::add(mdp::Paragraph p) {
+void Sunset::BodyModel::add(Sunset::Paragraph p) {
     paragraphs.push_back(p);
 }
 
-void mdbm::to_json(json& j, const BodyModel& p) {
+void Sunset::to_json(json& j, const BodyModel& p) {
     j = json{{"paragraphs", p.paragraphs}};
 }
 
-void mdbm::from_json(const json& j, BodyModel& p) {
-    p.paragraphs = j.at("id").get<std::vector<mdp::Paragraph>>();
+void Sunset::from_json(const json& j, BodyModel& p) {
+    p.paragraphs = j.at("id").get<std::vector<Sunset::Paragraph>>();
 }

@@ -3,9 +3,9 @@
 
 #include "Content.hpp"
 
-using mdc::Content;
+using Sunset::Content;
 
-void mdc::to_json(json &j, const Content& c) {
+void Sunset::to_json(json &j, const Content& c) {
     j = json{
         {"title", c.title},
         {"description", c.description},

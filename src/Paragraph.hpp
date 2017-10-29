@@ -17,12 +17,12 @@
 
 using nlohmann::json;
 
-namespace mdp {
+namespace Sunset {
     struct Paragraph {
         std::string id;
         std::string text;
         int type;
-        std::vector<mdm::Markup> markups;
+        std::vector<Sunset::Markup> markups;
     };
     void to_json(json& j, const Paragraph& p);
     void from_json(const json& j, Paragraph& p);

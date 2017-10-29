@@ -3,9 +3,9 @@
 
 #include "Markup.hpp"
 
-using mdm::Markup;
+using Sunset::Markup;
 
-void mdm::to_json(json& j, const Markup& m) {
+void Sunset::to_json(json& j, const Markup& m) {
     j = json{
         {"start", m.start},
         {"end", m.end},
@@ -17,7 +17,7 @@ void mdm::to_json(json& j, const Markup& m) {
     };
 }
 
-void mdm::from_json(const json& j, Markup& m) {
+void Sunset::from_json(const json& j, Markup& m) {
     m.start = j.at("start").get<int>();
     m.end = j.at("end").get<int>();
     m.type = j.at("type").get<int>();

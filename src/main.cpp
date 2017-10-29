@@ -10,6 +10,9 @@
 #include "Parser.hpp"
 #include "Content.hpp"
 #include "yaml-cpp/yaml.h"
+#include <dirent.h>
+
+
 
 int main() {
 
@@ -31,15 +34,29 @@ int main() {
     // assert(lineup.size() == 5);
 
 
-    auto parser = new Parser();
-    auto bm = parser->getFileJson("./assets/test2.md"); 
-    std::cout << bm;
+    // DIR *dpdf;
+    // struct dirent *epdf;
+
+    // dpdf = opendir("./");
+    // if (dpdf != NULL){
+    //     while ((epdf = readdir(dpdf))) {
+    //         printf("Filename: %s\n",epdf->d_name);
+    //         // std::cout << epdf->d_name << std::endl;
+    //     }
+    // }
+    // closedir(dpdf);
+
+
+    auto parser = new Sunset::Parser();
+    // auto bm = parser->getFileJson("./assets/test2.md"); 
+    auto bm = parser->getFileJson("./assets/", true); 
+    std::cout << bm << std::endl;
     // json j;
     // j["payload"]["content"] = bm;
     // json jp = bm;
     // std::cout << jp << std::endl;
     
-    // std::vector<mdc::Content> v = {
+    // std::vector<Sunset::Content> v = {
     //     {"Spider Man 3"},
     //     { "Dead Mans Curse" }
     // };
@@ -60,7 +77,7 @@ int main() {
 //     regexMap.insert({9, std::regex(ULOL_REGEX)});
 //     regexMap.insert({6, std::regex(P_REGEX)});
 
-//     auto bm = new mdbm::BodyModel();
+//     auto bm = new Sunset::BodyModel();
 
 //     std::ifstream myReadFile;
 //     myReadFile.open("/Users/ariel/Desktop/test-cmake/assets/test.md");
@@ -96,8 +113,8 @@ int main() {
 
 
 //     myReadFile.close();
-//     // auto bm = new mdbm::BodyModel();
-//     // mdp::Paragraph par { "2c66", "Hello, World", 1};
+//     // auto bm = new Sunset::BodyModel();
+//     // Sunset::Paragraph par { "2c66", "Hello, World", 1};
 //     // bm->add(par);
 //     json jp = *bm;
 //     std::cout << jp << std::endl;
