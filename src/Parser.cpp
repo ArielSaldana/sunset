@@ -68,7 +68,7 @@ json Parser::getFileJson(std::string file)
     return j;
 }
 
-json Parser::getFileJson(const std::string file, bool directory){
+json Parser::getFileJson(const std::string file, bool directory) {
     if (!directory)
         return getFileJson(file);
 
@@ -93,8 +93,6 @@ json Parser::getFileJson(const std::string file, bool directory){
     j["payload"]["content"] = content;
     return j;
 }
-
-
 
 bool Parser::preprocessFile(std::ifstream& myReadFile, std::vector<std::string>& lines, std::vector<std::string>& YAMLLines)
 {

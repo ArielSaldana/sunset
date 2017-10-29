@@ -2,6 +2,7 @@ cmake_minimum_required (VERSION 3.0)
 project (MarkdownParser)
 
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z")
+#SET_TARGET_PROPERTIES(name PROPERTIES PREFIX "")
 
 #include the subdirectory containing our libs
 include_directories(src)
@@ -21,7 +22,7 @@ file(GLOB HEADERS src/*.hpp)
 file(GLOB YAMLSOURCES yaml/src/*.cpp)
 file(GLOB YAMLHEADERS yaml/src/*.h)
 
-add_executable (sunset 
+add_executable (sunset.o
     src/json.h
     ${SOURCES}
     ${HEADERS}
@@ -36,7 +37,7 @@ add_executable (sunset
 #    ${YAMLHEADERS}
 #)
 
-add_library(MyLibStatic STATIC 
+add_library(sunset STATIC 
     ${SOURCES}
     ${YAMLSOURCES}
 )
@@ -44,4 +45,4 @@ add_library(MyLibStatic STATIC
 # Indicate which libraries to include during the link process.
 #target_link_libraries (Hello)
 
-install (TARGETS sunset DESTINATION bin)
+install (TARGETS sunset.o DESTINATION bin)
