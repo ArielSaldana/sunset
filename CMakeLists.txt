@@ -4,21 +4,28 @@ project (MarkdownParser)
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 #include the subdirectory containing our libs
-#add_subdirectory (src)
 include_directories(src)
+include_directories(yaml/include)
+
+
+#add_subdirectory (yaml)
+#include_directories(yaml/src)
+#LINK_DIRECTORIES(yaml/src)
+#target_link_libraries (yaml-cpp ${LIB_I_NEED})
+
 
 #indicate the entry point for the executable
+
+file(GLOB SOURCES src/*.cpp)
+file(GLOB HEADERS src/*.hpp)
+file(GLOB YAMLSOURCES yaml/src/*.cpp)
+file(GLOB YAMLHEADERS yaml/src/*.h)
 add_executable (sunset 
-src/main.cpp
-src/BodyModel.cpp
-src/Paragraph.cpp
-src/Parser.cpp
-src/Markup.cpp
 src/json.h
-src/BodyModel.hpp
-src/Paragraph.hpp
-src/Parser.hpp
-src/Markup.hpp
+${SOURCES}
+${HEADERS}
+${YAMLSOURCES}
+${YAMLHEADERS}
 )
 
 # Indicate which libraries to include during the link process.

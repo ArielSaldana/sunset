@@ -4,13 +4,14 @@ title: Carve Me
 description: CSS inset text-shadow
 link: http://codepen.io/simurai/pen/Atnmy
 img: carve-me.jpg
-tags: [css]
 category: lab
 layout: post
 
 ---
 
 Unfortunately, there is no __inset text-shadow__. But you can kinda simulate it.
+
+![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
 
 <p data-height="268" data-theme-id="3586" data-slug-hash="Atnmy" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/simurai/pen/Atnmy'>Carve Me</a> by simurai (<a href='http://codepen.io/simurai'>@simurai</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 <script async src="//codepen.io/assets/embed/ei.js"></script>

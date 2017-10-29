@@ -8,21 +8,44 @@
 #include <regex>
 #include <map>
 #include "Parser.hpp"
+#include "Content.hpp"
+#include "yaml-cpp/yaml.h"
 
 int main() {
-    auto parser = new Parser();
-    parser->loadFile("./assets/test2.md");
-    
-    parser->preprocessFile();
-    parser->process(
-        parser->lines,
-        0,
-        parser->lines.size(), 
-        nullptr
-    );
 
-    json jp = parser->bodyModel;
-    std::cout << jp << std::endl;
+    // YAML::Node lineup = YAML::LoadFile("./assets/test2.md");
+    // // YAML::Node lineup = YAML::Load("{1B: Prince Fielder, 2B: Rickie Weeks, LF: Ryan Braun}");
+    // // YAML::Node lineup = YAML::Load("{1B: Prince Fielder, 2B: Rickie Weeks, LF: Ryan Braun, tags: [css]}");
+    
+    // for(YAML::const_iterator it=lineup.begin();it!=lineup.end();++it) {
+    //     // if (it->first.Type() == YAML::NodeType::Sequence) {
+
+    //     // } else 
+    //     std::cout << it->first.as<std::string>() << std::endl;
+    //     std::cout << it->second.Type() << std::endl;
+    // //   std::cout << "Playing at " << it->first.as<std::string>() << " is " << it->second.as<std::string>() << "\n";
+    // }
+    
+    // lineup["RF"] = "Corey Hart";
+    // lineup["C"] = "Jonathan Lucroy";
+    // assert(lineup.size() == 5);
+
+
+    auto parser = new Parser();
+    auto bm = parser->getFileJson("./assets/test2.md"); 
+    std::cout << bm;
+    // json j;
+    // j["payload"]["content"] = bm;
+    // json jp = bm;
+    // std::cout << jp << std::endl;
+    
+    // std::vector<mdc::Content> v = {
+    //     {"Spider Man 3"},
+    //     { "Dead Mans Curse" }
+    // };
+    // json j;
+    // j["payload"]["content"] = v;
+    // std::cout << j << std::endl;
 }
 
 // int main()

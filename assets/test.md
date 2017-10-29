@@ -40,6 +40,9 @@ This is a completely new Paragraph
 
 and *now* [a link](http://www.google.com) to **follow** and [another](http://yahoo.com/).
 
+
+![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+
 * One
 * Two
 * Three

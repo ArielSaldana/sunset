@@ -3,22 +3,99 @@
 
 #include "Parser.hpp"
 
-void Parser::loadFile(std::string file)
+mdc::Content Parser::loadFile(std::string file)
 {
+    mdc::Content fileContent;
+    mdbm::BodyModel bodyModel;
+    
+    std::vector<std::string> lines;
+    std::vector<std::string> YAMLLines;
+
+    //open stream to read file
+    std::ifstream myReadFile;
     myReadFile.open(file);
+
+    // preprocess file
+    bool requiresYAMLProcessing = preprocessFile(myReadFile, lines, YAMLLines);
+
+    // YAML processing
+    if (requiresYAMLProcessing) {
+        std::string yaml = "{";
+        for (int i = 1; i < YAMLLines.size(); i++) {
+            yaml += YAMLLines.at(i) + ", ";
+        }
+        yaml+= "}";
+        YAML::Node lineup = YAML::Load(yaml);
+
+        for(YAML::const_iterator it=lineup.begin();it!=lineup.end();++it) {
+            switch(values[it->first.as<std::string>()])
+            {
+                case title:
+                    fileContent.title = it->second.as<std::string>();
+                    break;
+                case description:
+                    fileContent.description = it->second.as<std::string>();
+                    break;
+                case link:
+                    fileContent.link = it->second.as<std::string>();
+                    break;
+                case img:
+                    fileContent.img = it->second.as<std::string>();
+                    break;
+                case category:
+                    fileContent.category = it->second.as<std::string>();
+                    break;
+                case layout:
+                    fileContent.layout = it->second.as<std::string>();
+                    break;
+            }
+        }
+    }
+
+    // Markdown processing
+    processMarkdown(bodyModel, lines, 0, lines.size(), nullptr);
+    
+    fileContent.bodyModel = bodyModel;
+    return fileContent;
 }
 
-void Parser::preprocessFile()
+
+json Parser::getFileJson(std::string file)
+{
+    json j = loadFile(file);
+    return j;
+}
+
+bool Parser::preprocessFile(std::ifstream& myReadFile, std::vector<std::string>& lines, std::vector<std::string>& YAMLLines)
 {
     std::string line;
+    bool ignoringYAML = false, hasYAML = false;
+    int linecount = 1;
 
     while (std::getline(myReadFile, line))
     {
-        lines.push_back(line);
+        if (linecount == 1 && std::regex_match(line, std::regex("^-{3}$"))) {
+            ignoringYAML = true;
+            hasYAML = true;
+        }
+        else if (std::regex_match(line, std::regex("^-{3}$"))) {
+            ignoringYAML = false;
+        }
+        
+        if (!ignoringYAML) {
+            lines.push_back(line);
+        } else {
+            if (line.length() > 0)
+            YAMLLines.push_back(line);
+        }
+
+        linecount++;
     }
+
+    return hasYAML;
 }
 
-void Parser::process(std::vector<std::string> const &lines, int index, int length, mdp::Paragraph *p)
+void Parser::processMarkdown(mdbm::BodyModel& bodyModel, std::vector<std::string> const &lines, int index, int length, mdp::Paragraph *p)
 {
     if (index != length)
     {
@@ -65,7 +142,7 @@ void Parser::process(std::vector<std::string> const &lines, int index, int lengt
                 break;
             }
         }
-        process(lines, index + 1 + offset, length, &par);
+        processMarkdown(bodyModel, lines, index + 1 + offset, length, &par);
     }
 }
 
