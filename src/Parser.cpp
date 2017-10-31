@@ -207,22 +207,20 @@ void Parser::processLine(Sunset::Paragraph &paragraph)
 
             if (c == '*' || c == '_') { 
                 int count = 1;
-                while (i + count < paragraph.text.length()) {
-                    if (paragraph.text.at(i+count) == c) {
+                while (i + count < paragraph.text.length() && 
+                    paragraph.text.at(count+i) == c) {
                         count++;
-                    } else {
-                        break;
-                    }
                 }
 
                 paragraph.text.erase(i, count);
+                
                 markup = {i, 0, count};
                 i--;
                 
                 // stack logic
                 if (!(stack.empty()) && (stack.top().type == markup.type)) {
                     markup = stack.top();
-                    markup.end = i;
+                    markup.end = i+1;
                     paragraph.markups.push_back(markup);
                     stack.pop();
                 } else {

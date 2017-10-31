@@ -16,5 +16,5 @@ int main() {
     auto parser = new Sunset::Parser();
     // auto bm = parser->getFileJson("./assets/test2.md"); 
     auto bm = parser->getFileJson("./assets/", true); 
-    std::cout << bm << std::endl;
+    std::cout << bm.dump(4) << std::endl;
 }

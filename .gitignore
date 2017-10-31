@@ -10,3 +10,4 @@ CTestTestfile.cmake
 sunset.o
 libsunset.a
 .vscode
+.DS_STORE

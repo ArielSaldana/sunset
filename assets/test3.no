@@ -1,12 +1,18 @@
-# This is the Title About animals
 
-## Cats
 
-This is the paragraph About cats.This is the paragraph About cats.This is the paragraph About cats.This is the paragraph About cats.This is the paragraph About cats.This is the paragraph About cats.This is the paragraph About cats.This is the paragraph About cats.This is the paragraph About cats.This is the paragraph About cats.
+*I **REALY** like dogs.I **REALY** like dogs.I **REALY** like dogs.I **REALY** like dogs.I **REALY** like dogs.I **REALY** like dogs.I **REALY** like dogs.I **REALY** like dogs.I **REALY** like dogs.I **REALY** like dogs.I **REALY** like dogs.I **REALY** like dogs.I **REALY** like dogs.I **REALY** like dogs.I **REALY** like dogs.I **REALY** like dogs.*
 
-## Dogs
+**Really**
 
-I **REALY** like dogs.I **REALY** like dogs.I **REALY** like dogs.I **REALY** like dogs.I **REALY** like dogs.I **REALY** like dogs.I **REALY** like dogs.I **REALY** like dogs.I **REALY** like dogs.I **REALY** like dogs.I **REALY** like dogs.I **REALY** like dogs.I **REALY** like dogs.I **REALY** like dogs.I **REALY** like dogs.I **REALY** like dogs.
+
+*I **REALY** like dogs.*
+[0, 23]
+[3, 10]
+*I **REALY** like dogs.*
+
+[7, 14 //Math.floor(newLen - len)];
+<em>I **REALY** like dogs.</em>
+<em>I <strong>REALY</strong> like dogs.</em>
 
 ## Spiders
 
