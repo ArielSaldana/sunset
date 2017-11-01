@@ -144,10 +144,13 @@ void Parser::processMarkdown(Sunset::BodyModel& bodyModel, std::vector<std::stri
                 if (rule.multiline && rule.fenced)
                 {
                     int searchPointer = index + 1;
+                    par.text = "";
                     while (searchPointer + offset < lines.size() &&
                            !(std::regex_match(lines.at(searchPointer + offset), rule.reg)))
                     {
-                        par.text += "\r\n" + lines.at(searchPointer + offset);
+                        // par.text += "\r\n" + lines.at(searchPointer + offset);
+                        // std::cout << lines.at(searchPointer + offset) << std::endl;
+                        par.text += lines.at(searchPointer + offset) + "\r\n";
                         offset++;
                     }
                     if (offset > 0)
@@ -214,7 +217,6 @@ void Parser::processLine(Sunset::Paragraph &paragraph)
 
                 if (c == '`') {
                     std::string s = paragraph.text.substr(i, paragraph.text.length());
-                    std::cout << s << std::endl;
                     std::smatch match;
                     std::regex r = std::regex("(`{"+std::to_string(count)+"}\\s*(.*?)\\s*`{"+std::to_string(count)+"})");
 
