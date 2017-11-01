@@ -205,29 +205,48 @@ void Parser::processLine(Sunset::Paragraph &paragraph)
         {
             c = paragraph.text[i];
 
-            if (c == '*' || c == '_') { 
+            if (c == '*' || c == '_' || c == '`') { 
                 int count = 1;
                 while (i + count < paragraph.text.length() && 
                     paragraph.text.at(count+i) == c) {
                         count++;
                 }
 
-                paragraph.text.erase(i, count);
+                if (c == '`') {
+                    std::string s = paragraph.text.substr(i, paragraph.text.length());
+                    std::cout << s << std::endl;
+                    std::smatch match;
+                    std::regex r = std::regex("(`{"+std::to_string(count)+"}\\s*(.*?)\\s*`{"+std::to_string(count)+"})");
 
-                markup = {i, 0, count};
-                i--;
-                
-                // stack logic
-                if (!(stack.empty()) && (stack.top().type == markup.type)) {
-                    markup = stack.top();
-                    markup.end = i+1;
-                    paragraph.markups.push_back(markup);
-                    stack.pop();
+                    if (std::regex_search(s, match, r)) {
+                        unsigned int pos = s.find(match[0]);
+
+                        if (pos == 0) {
+                            paragraph.text.replace(i, match[0].length(), match[2]);
+                            markup = {i, i + static_cast<int>(match[2].length()), 4};
+                            paragraph.markups.push_back(markup);
+
+                            int difference = match[2].length() - i;
+                            i += difference-1;
+                        }
+                    }
                 } else {
-                    stack.push(markup);
+                    paragraph.text.erase(i, count);
+
+                    markup = {i, 0, count};
+                    i--;
+                    
+                    // stack logic
+                    if (!(stack.empty()) && (stack.top().type == markup.type)) {
+                        markup = stack.top();
+                        markup.end = i+1;
+                        paragraph.markups.push_back(markup);
+                        stack.pop();
+                    } else {
+                        stack.push(markup);
+                    }
                 }
-            } 
-            else if (c == '[') {
+            }  else if (c == '[') {
                 std::string s = paragraph.text.substr(i, paragraph.text.length());
                 std::smatch match;
                 if (std::regex_search(s, match, std::regex("\\[(.+?)\\]\\((.+?)\\s?(\"(.+?)\")?\\)"))) {

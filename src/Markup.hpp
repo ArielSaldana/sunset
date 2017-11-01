@@ -13,8 +13,9 @@ using nlohmann::json;
 #define ITALIC  1
 #define BOLD    2
 #define LINK    3
+#define CODE    4
 #define UNDERLINE 5
-#define STRIKE_THROUGH 4
+#define STRIKE_THROUGH 6
 
 namespace Sunset {
     struct Markup {
