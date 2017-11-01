@@ -1,0 +1,8 @@
+[love](https://hurts.com) doesnt work
+but this should be part of the paragraph
+
+[testing](https://testing.com)
+
+[I'm an inline-style link with title](https://www.google.com "Google's Homepage")
+
+#does this default to text

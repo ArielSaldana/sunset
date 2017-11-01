@@ -177,6 +177,9 @@ void Parser::processMarkdown(Sunset::BodyModel& bodyModel, std::vector<std::stri
 void Parser::processLine(Sunset::Paragraph &paragraph)
 {
     int removeIndex = 0;
+    std::stack<Sunset::Markup> stack;
+    Sunset::Markup markup;
+    
     switch (paragraph.type)
     {
     case 1:
@@ -197,10 +200,7 @@ void Parser::processLine(Sunset::Paragraph &paragraph)
     case 6:
     case 10:
         //create a stack based algorithm for this, or regex, and keep track of start/ends
-        std::stack<Sunset::Markup> stack;
         char c;
-        Sunset::Markup markup;
-
         for (int i = 0; i < paragraph.text.length(); i++)
         {
             c = paragraph.text[i];
@@ -213,7 +213,7 @@ void Parser::processLine(Sunset::Paragraph &paragraph)
                 }
 
                 paragraph.text.erase(i, count);
-                
+
                 markup = {i, 0, count};
                 i--;
                 
@@ -226,9 +226,52 @@ void Parser::processLine(Sunset::Paragraph &paragraph)
                 } else {
                     stack.push(markup);
                 }
+            } 
+            else if (c == '[') {
+                std::string s = paragraph.text.substr(i, paragraph.text.length());
+                std::smatch match;
+                // std::regex old("(\\[(.+?)\\]\\((.+?)\\))");
+                if (std::regex_search(s, match, std::regex("\\[(.+?)\\]\\((.+?)\\s?(\"(.+?)\")?\\)"))) {
+                    unsigned int pos =  s.find(match[0]);
+
+                    // for (int i = 0; i < match.size(); i++) {
+                    //     std::cout << match[i] << std::endl;
+                    // }
+                    if (pos == 0) { // this bracket is a match to a link
+                        paragraph.text.replace(i, match[0].length(), match[1]);
+                        
+                        markup = {i, static_cast<int>(i + match[1].length()), 3};
+                        markup.href = match[2];
+                        (match[4] == "") ? markup.title = match[1] : markup.title = match[4]; 
+                        
+                        paragraph.markups.push_back(markup);
+
+                        int difference = match[2].length() - i;
+                        i += difference-1;
+                    }
+                }
             }
         }
+        // check for links
+        // std::regex e("(\\[(.+?)\\]\\((.+?)\\))");
 
-        break;
+        // std::sregex_iterator iter(paragraph.text.begin(), paragraph.text.end(), e);
+        // std::sregex_iterator end;
+
+        // std::string s = paragraph.text;
+        
+        // while(iter != end)
+        // {
+        //     unsigned int pos =  s.find((*iter)[0]);
+        //     s.replace(pos, (*iter)[0].length(), (*iter)[2]);
+        //     std::cout << s << std::endl;
+        //     // for(unsigned i = 0; i < iter->size(); ++i)
+        //     // {
+        //         // std::cout << s.find((*iter)[i]) << std::endl;
+        //         // std::cout << "the " << i + 1 << "th match" << ": " << (*iter)[i] << std::endl;
+        //     // }
+        //     ++iter;
+        // }
+
     }
 }

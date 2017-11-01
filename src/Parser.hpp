@@ -29,8 +29,7 @@
 #define UL_REGEX "^(\\*|-)\\s.+"
 #define OL_REGEX "^\\d\\.\\s.+"
 #define IMG_REGEX "^!\\[.*?\\]\\(.+\\)"
-//#define P_REGEX "^[^(\\-#*)].*"
-#define P_REGEX "^(\\w+|\\*{1,2}).+"
+#define P_REGEX "[^\n]+"
 #define CODEBLOCK_REGEX "`{3}.*"
 
 namespace Sunset{
