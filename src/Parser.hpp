@@ -72,12 +72,40 @@ namespace Sunset{
         } {}
 
         Sunset::Content loadFile(const std::string file);
+        /**
+         * @method  {getFileJson} Gets the Json value from a single or multiple files
+         * @param   {std::string} file - vector to push any Markdown syntax onto for parsing.
+         * @param   {bool} directory - vector to push any YAML syntax onto for parsing.
+         * @return  {json} the json value
+         */
         json getFileJson(const std::string file);
         json getFileJson(const std::string file, bool directory);
-        void loadDirectory(const std::string path);
+
+        /**
+         * Proprocess the file. Checks if the file has YAML syntax to parse.
+         * @param {std::ifstream&} myReadFile the address of the file being read
+         * @param {std::vector<std::string>&} lines vector to push any Markdown syntax onto for parsing.
+         * @param {std::vector<std::string>&} YAMLLines vector to push any YAML syntax onto for parsing.
+         * @return {bool} hasYaml?
+         */
         bool preprocessFile(std::ifstream& myReadFile, std::vector<std::string>& lines, std::vector<std::string>& YAMLLines);
+        
+        /**
+         * @method {processYAML} processes YAML content.
+         * @return {void}
+         */
         void processYAML();
+
+        /**
+         * @method {processMarkdown} processes Markdown content.
+         * @return {void}
+         */
         void processMarkdown(Sunset::BodyModel& bodyModel, std::vector<std::string> const &lines, int index, int length, Sunset::Paragraph *p);
+        
+        /**
+         * @method {processLine} processes markdown syntax further. Removing bold, italics, etc.
+         * @return {void}
+         */
         void processLine(Sunset::Paragraph &paragraph);
     };
 }

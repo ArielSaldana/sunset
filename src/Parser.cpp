@@ -2,6 +2,7 @@
 // Copyright 1998-2017 Ariel Saldana. All Rights Reserved.
 
 #include "Parser.hpp"
+#include "GenerateId.hpp"
 
 using namespace Sunset;
 
@@ -138,7 +139,7 @@ void Parser::processMarkdown(Sunset::BodyModel& bodyModel, std::vector<std::stri
             if (std::regex_match(line, rule.reg))
             { // match
 
-                par = {"2ecf", line, rule.id, {}};
+                par = {Sunset::random_string(4), line, rule.id, {}};
 
                 if (rule.multiline && rule.fenced)
                 {
@@ -164,7 +165,6 @@ void Parser::processMarkdown(Sunset::BodyModel& bodyModel, std::vector<std::stri
                     }
                 }
 
-                // par.text = processLine(par.text, par.type);
                 processLine(par);
                 bodyModel.add(par);
                 break;
@@ -230,13 +230,9 @@ void Parser::processLine(Sunset::Paragraph &paragraph)
             else if (c == '[') {
                 std::string s = paragraph.text.substr(i, paragraph.text.length());
                 std::smatch match;
-                // std::regex old("(\\[(.+?)\\]\\((.+?)\\))");
                 if (std::regex_search(s, match, std::regex("\\[(.+?)\\]\\((.+?)\\s?(\"(.+?)\")?\\)"))) {
                     unsigned int pos =  s.find(match[0]);
 
-                    // for (int i = 0; i < match.size(); i++) {
-                    //     std::cout << match[i] << std::endl;
-                    // }
                     if (pos == 0) { // this bracket is a match to a link
                         paragraph.text.replace(i, match[0].length(), match[1]);
                         
@@ -252,26 +248,5 @@ void Parser::processLine(Sunset::Paragraph &paragraph)
                 }
             }
         }
-        // check for links
-        // std::regex e("(\\[(.+?)\\]\\((.+?)\\))");
-
-        // std::sregex_iterator iter(paragraph.text.begin(), paragraph.text.end(), e);
-        // std::sregex_iterator end;
-
-        // std::string s = paragraph.text;
-        
-        // while(iter != end)
-        // {
-        //     unsigned int pos =  s.find((*iter)[0]);
-        //     s.replace(pos, (*iter)[0].length(), (*iter)[2]);
-        //     std::cout << s << std::endl;
-        //     // for(unsigned i = 0; i < iter->size(); ++i)
-        //     // {
-        //         // std::cout << s.find((*iter)[i]) << std::endl;
-        //         // std::cout << "the " << i + 1 << "th match" << ": " << (*iter)[i] << std::endl;
-        //     // }
-        //     ++iter;
-        // }
-
     }
 }
