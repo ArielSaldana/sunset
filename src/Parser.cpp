@@ -103,12 +103,14 @@ bool Parser::preprocessFile(std::ifstream& myReadFile, std::vector<std::string>&
 
     while (std::getline(myReadFile, line))
     {
+        // if yaml found
         if (linecount == 1 && std::regex_match(line, std::regex("^-{3}$"))) {
             ignoringYAML = true;
             hasYAML = true;
         }
         else if (std::regex_match(line, std::regex("^-{3}$"))) {
             ignoringYAML = false;
+            line = "";
         }
         
         if (!ignoringYAML) {
