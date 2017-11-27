@@ -12,7 +12,8 @@ void Sunset::to_json(json& j, const Markup& m) {
         {"type", m.type},
     };
 
-    if (m.type == 3) {
+    // If the markup type is a link
+    if (m.type == LINK) {
         j.emplace("anchorType", m.anchorType);
         j.emplace("rel", m.rel);
         j.emplace("href", m.href);
@@ -26,7 +27,7 @@ void Sunset::from_json(const json& j, Markup& m) {
     m.end = j.at("end").get<int>();
     m.type = j.at("type").get<int>();
 
-    if (m.type == 3) {
+    if (m.type == LINK) {
         m.anchorType = j.at("anchorType").get<int>();
         m.rel = j.at("rel").get<std::string>();
         m.href = j.at("href").get<std::string>();
