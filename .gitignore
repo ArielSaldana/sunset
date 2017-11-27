@@ -11,3 +11,4 @@ sunset.o
 libsunset.a
 .vscode
 .DS_Store
+.vscode/settings.json

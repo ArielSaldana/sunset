@@ -32,6 +32,10 @@
         "algorithm": "cpp",
         "bitset": "cpp",
         "fstream": "cpp",
-        "locale": "cpp"
+        "locale": "cpp",
+        "list": "cpp",
+        "queue": "cpp",
+        "set": "cpp",
+        "unordered_map": "cpp"
     }
 }

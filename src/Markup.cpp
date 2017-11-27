@@ -10,19 +10,26 @@ void Sunset::to_json(json& j, const Markup& m) {
         {"start", m.start},
         {"end", m.end},
         {"type", m.type},
-        {"anchorType", m.anchorType},
-        {"rel", m.rel},
-        {"href", m.href},
-        {"title", m.title}
     };
+
+    if (m.type == 3) {
+        j.emplace("anchorType", m.anchorType);
+        j.emplace("rel", m.rel);
+        j.emplace("href", m.href);
+        j.emplace("title", m.title);
+    }
+
 }
 
 void Sunset::from_json(const json& j, Markup& m) {
     m.start = j.at("start").get<int>();
     m.end = j.at("end").get<int>();
     m.type = j.at("type").get<int>();
-    m.anchorType = j.at("anchorType").get<int>();
-    m.rel = j.at("rel").get<std::string>();
-    m.href = j.at("href").get<std::string>();
-    m.title = j.at("title").get<std::string>();
+
+    if (m.type == 3) {
+        m.anchorType = j.at("anchorType").get<int>();
+        m.rel = j.at("rel").get<std::string>();
+        m.href = j.at("href").get<std::string>();
+        m.title = j.at("title").get<std::string>();
+    }
 }

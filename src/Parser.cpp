@@ -141,7 +141,7 @@ void Parser::processMarkdown(Sunset::BodyModel& bodyModel, std::vector<std::stri
             if (std::regex_match(line, rule.reg))
             { // match
 
-                par = {Sunset::random_string(4), line, rule.id, {}};
+                par = { Sunset::random_string(4), line, rule.id, {} };
 
                 if (rule.multiline && rule.fenced)
                 {
@@ -236,7 +236,7 @@ void Parser::processLine(Sunset::Paragraph &paragraph)
                     }
                 } else {
                     paragraph.text.erase(i, count);
-
+                    
                     markup = {i, 0, count};
                     i--;
                     
